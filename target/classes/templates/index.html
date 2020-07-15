@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Hai's blog</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="../static/css/style.css"
+	th:href="@{/css/style.css}" />
+</head>
+<body>
+
+	<div class="page">
+		<h1>Hai's blog</h1>
+		<div class="metanav">
+			<a th:unless="${session.logged_in}" href="/login">log in</a> <a
+				th:if="${session.logged_in}" href="/logout">log out</a>
+		</div>
+
+		<form th:if="${session.logged_in}" method="post" class="add-entry">
+			<dl>
+				<dt>Title:</dt>
+				<dd>
+					<input type="text" size="30" name="title" />
+				</dd>
+				<dt>Text:</dt>
+				<dd>
+					<textarea name="text" rows="5" cols="40"></textarea>
+				</dd>
+				<dd>
+					<input type="submit" value="Share" />
+				</dd>
+			</dl>
+		</form>
+
+
+		<ol class="entries">
+			<li th:unless="${#lists.isEmpty(entries)}"
+				th:each="entry : ${entries}">
+				<h2 th:text="${entry.title}"></h2>
+				<p th:text="${entry.text}"></p>
+			</li>
+			<li th:if="${#lists.isEmpty(entries)}"><em>Unbelievable. No
+					entries here so far </em></li>
+		</ol>
+	</div>
+
+</body>
+</html>
